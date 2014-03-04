@@ -41,4 +41,5 @@
   tags:
   - mysql
   - mysql-configure
-  notify: restart mysql
+  notify:
+  - restart mysql
