@@ -1,0 +1,44 @@
+---
+- name: install MySQL
+  yum: name={{item}} state=present
+  with_items:
+  - mysql
+  - mysql-server
+  tags:
+  - mysql
+  - mysql-service
+
+- name: run MySQL
+  service: name=mysqld state=started
+  tags:
+  - mysql
+  - mysql-service
+
+- name: install required python MySQLdb lib to create databases and users
+  yum: name=MySQL-python state=present
+  tags:
+  - mysql
+  - mysql-dependencies
+
+- name: create db user
+  mysql_user: name={{app.mysql.user}} password={{app.mysql.password}} priv=*.*:ALL host={{app.mysql.host}} state=present
+  tags:
+  - mysql
+  - mysql-user
+
+- name: create mysql database
+  mysql_db: name={{app.mysql.db}} state=present
+  tags:
+  - mysql
+  - mysql-db
+
+- name: bind mysql remote address
+  ini_file: dest=/etc/my.cnf
+            section=mysqld
+            option=bind-address
+            value={{item}}
+  with_items: app.mysql.bind
+  tags:
+  - mysql
+  - mysql-configure
+  notify: restart mysql
