@@ -21,7 +21,7 @@
   - mysql-dependencies
 
 - name: create db user
-  mysql_user: name={{app.mysql.user}} password={{app.mysql.password}} priv=*.*:ALL host={{app.mysql.host}} state=present
+  mysql_user: name={{app.mysql.user}} password={{app.mysql.password}} priv={{app.mysql.privileges}} host={{app.mysql.host}} state=present
   tags:
   - mysql
   - mysql-user
