@@ -15,7 +15,10 @@
   - mysql-service
 
 - name: install required python MySQLdb lib to create databases and users
-  yum: name=MySQL-python state=present
+  yum: name={{item}} state=present
+  with_items:
+      - gcc-c++
+      - MySQL-python
   tags:
   - mysql
   - mysql-dependencies
