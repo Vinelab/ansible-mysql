@@ -20,7 +20,7 @@
   - mysql-service
 
 - name: run MySQL
-  service: name=mysqld state=started
+  service: name=mysqld state=started enabled=yes
   tags:
   - mysql
   - mysql-service
