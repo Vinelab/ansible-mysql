@@ -35,13 +35,13 @@
   - mysql-dependencies
 
 - name: create db user
-  mysql_user: name={{app.mysql.user}} password={{app.mysql.password}} priv={{app.mysql.privileges}} host={{app.mysql.host}} state=present
+  mysql_user: name={{mysql.user}} password={{mysql.password}} priv={{mysql.privileges}} host={{mysql.host}} state=present
   tags:
   - mysql
   - mysql-user
 
 - name: create mysql database
-  mysql_db: name={{app.mysql.db}} state=present
+  mysql_db: name={{mysql.db}} state=present
   tags:
   - mysql
   - mysql-db
@@ -51,7 +51,7 @@
             section=mysqld
             option=bind-address
             value={{item}}
-  with_items: app.mysql.bind
+  with_items: mysql.bind
   tags:
   - mysql
   - mysql-configure
